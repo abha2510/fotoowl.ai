@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 function Message({ recipient, sendMessage }) {
   const [message, setMessage] = useState('');
-  const [sender] = useState('User 1');
+  const [sender] = useState('You');
 
   const handleSendMessage = () => {
     if (message.trim()) {

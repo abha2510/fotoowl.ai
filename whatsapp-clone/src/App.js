@@ -18,6 +18,7 @@ function App() {
         { id: 1, name: 'Alice', avatar: 'https://picsum.photos/200?random=1' },
         { id: 2, name: 'Bob', avatar: 'https://picsum.photos/200?random=2' },
       ];
+
       dispatch({ type: 'SET_CONTACTS', payload: defaultContacts });
     }
 
@@ -46,15 +47,14 @@ function App() {
       alert('Please enter both a name and upload a photo');
     }
   };
+
   const filteredMessages = selectedContact
     ? messages.filter(
       (msg) =>
-        (msg.sender === selectedContact.name && msg.recipient === state.currentUser) ||
-        (msg.sender === state.currentUser && msg.recipient === selectedContact.name)
+        (msg.sender === selectedContact.name && msg.recipient === 'You') ||
+        (msg.sender === 'You' && msg.recipient === selectedContact.name)
     )
     : [];
-
-
 
   return (
     <div style={styles.container}>
@@ -91,11 +91,7 @@ function App() {
         {selectedContact ? (
           <>
             <MessageList messages={filteredMessages} />
-            <Message
-              recipient={selectedContact.name}
-              sendMessage={(message) => sendMessage(state.currentUser, selectedContact.name, message)}
-            />
-
+            <Message recipient={selectedContact.name} sendMessage={sendMessage} />
           </>
         ) : (
           <div style={styles.contact}>Select a contact to chat with</div>
