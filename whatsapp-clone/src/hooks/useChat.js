@@ -27,6 +27,13 @@ export const useChat = () => {
         dispatch({ type: 'SET_MESSAGES', payload: messages });
     }, [isLoading, error, data, dispatch, refresh]);
 
+    useEffect(() => {
+        const savedContact = localStorage.getItem('selectedContact');
+        if (savedContact) {
+            dispatch({ type: 'SELECT_CONTACT', payload: JSON.parse(savedContact) });
+        }
+    }, [dispatch]);
+
     const sendMessage = (sender, recipient, message) => {
         const newMessage = {
             id: Date.now(),
@@ -55,12 +62,17 @@ export const useChat = () => {
         setRefresh(!refresh);
     };
 
+    const selectContact = (contact) => {
+        localStorage.setItem('selectedContact', JSON.stringify(contact));
+        dispatch({ type: 'SELECT_CONTACT', payload: contact });
+    };
+
     return {
         contacts: state.contacts,
         messages: state.messages,
         selectedContact: state.selectedContact,
         sendMessage,
         addContact,
-        selectContact: (contact) => dispatch({ type: 'SELECT_CONTACT', payload: contact }),
+        selectContact,
     };
 };

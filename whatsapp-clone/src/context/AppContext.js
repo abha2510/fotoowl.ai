@@ -6,6 +6,7 @@ const initialState = {
     contacts: [],
     messages: [],
     selectedContact: null,
+    currentUser: 'You',
 };
 
 function appReducer(state, action) {
